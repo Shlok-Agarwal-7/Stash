@@ -1,26 +1,110 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-light-a0: #000000;
+  --color-dark-a0: #ffffff;
+
+  /** Theme primary colors */
+  --color-primary-a0: #2fabe4;
+  --color-primary-a10: #55b4e7;
+  --color-primary-a20: #71bdea;
+  --color-primary-a30: #89c7ed;
+  --color-primary-a40: #9ed0f0;
+  --color-primary-a50: #b3d9f3;
+
+  /** Theme surface colors */
+  --color-surface-a0: #121212;
+  --color-surface-a10: #282828;
+  --color-surface-a20: #3f3f3f;
+  --color-surface-a30: #575757;
+  --color-surface-a40: #717171;
+  --color-surface-a50: #8b8b8b;
+
+  /** Theme tonal surface colors */
+  --color-surface-tonal-a0: #191f24;
+  --color-surface-tonal-a10: #2e3438;
+  --color-surface-tonal-a20: #454a4e;
+  --color-surface-tonal-a30: #5d6165;
+  --color-surface-tonal-a40: #76797d;
+  --color-surface-tonal-a50: #8f9395;
+
+  /** Success colors */
+  --color-success-a0: #22946e;
+  --color-success-a10: #47d5a6;
+  --color-success-a20: #9ae8ce;
+
+  /** Warning colors */
+  --color-warning-a0: #a87a2a;
+  --color-warning-a10: #d7ac61;
+  --color-warning-a20: #ecd7b2;
+
+  /** Danger colors */
+  --color-danger-a0: #9c2121;
+  --color-danger-a10: #d94a4a;
+  --color-danger-a20: #eb9e9e;
+
+  /** Info colors */
+  --color-info-a0: #21498a;
+  --color-info-a10: #4077d1;
+  --color-info-a20: #92b2e5;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@utility h1 {
+  @apply text-[34px] leading-[42px] font-bold;
+  color: var(--color-dark-a0);
+}
+@utility h2 {
+  @apply text-[24px] leading-[36px] font-bold;
+  color: var(--color-dark-a0);
+}
+@utility h3 {
+  @apply text-[20px] leading-[28px] font-semibold;
+  color: var(--color-dark-a0);
+}
+@utility h4 {
+  @apply text-[18px] leading-[20px] font-medium;
+  color: var(--color-dark-a0);
+}
+@utility h5 {
+  @apply text-[16px] leading-[24px] font-semibold;
+  color: var(--color-dark-a0);
+}
+@utility subtitle-1 {
+  @apply text-[16px] leading-[24px] font-medium;
+  color: var(--color-dark-a0);
+}
+@utility subtitle-2 {
+  @apply text-[14px] leading-[20px] font-semibold;
+  color: var(--color-dark-a0);
+}
+@utility body-1 {
+  @apply text-[16px] leading-[24px] font-normal;
+  color: var(--color-dark-a0);
+}
+@utility body-2 {
+  @apply text-[14px] leading-[20px] font-normal;
+  color: var(--color-dark-a0);
+}
+@utility button {
+  @apply text-[14px] leading-[20px] font-medium;
+  color: var(--color-dark-a0);
+}
+@utility caption {
+  @apply text-[12px] leading-[16px] font-normal;
+  color: var(--color-dark-a0);
+}
+@utility overline {
+  @apply text-[10px] leading-[14px] font-normal;
+  color: var(--color-dark-a0);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Layout utilities */
+@utility container {
+  @apply mx-auto max-w-7xl px-5;
 }
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility primary-btn {
+  @apply bg-primary-a0 hover:bg-primary-a20 transition-all rounded-full button;
+}
+@utility flex-center {
+  @apply flex items-center justify-center;
 }
