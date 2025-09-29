@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen items-stretch">
       <section className=" bg-surface-a10 hidden w-1/2 lg:flex xl:w-2/5">
         <div className="flex-center flex-col space-y-5">
           <div className="space-y-3 px-10 mt-6">
@@ -23,7 +23,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           />
         </div>
       </section>
-      {children}
+      <div className="flex-center flex-col flex-1 space-y-4 bg-surface-a0">
+        <h1 className="text-6xl italic text-primary-a0 lg:hidden"> STASH </h1>
+        {children}
+      </div>
     </div>
   );
 };
