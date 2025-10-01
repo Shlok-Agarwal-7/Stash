@@ -21,6 +21,8 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         primary:
           "bg-primary-a0 hover:bg-primary-a20 transition-all rounded-full button",
+        danger:
+          "bg-danger-a0 hover:bg-danger-a10 transition-all rounded-full button",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
