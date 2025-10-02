@@ -131,7 +131,7 @@
   @apply border-none shadow-none p-0 placeholder:text-dark-a0/50 body-2 ring-0;
 }
 @utility shad-alert-dialog {
-  @apply space-y-4 max-w-[95%] sm:w-fit rounded-xl md:rounded-[30px] px-4 md:px-8 py-10 bg-surface-a20 outline-none;
+  @apply space-y-4 max-w-[95%] sm:w-fit rounded-xl md:rounded-[30px] px-4 md:px-8 py-10 bg-surface-a10 outline-none;
 }
 
 @utility shad-submit-btn {

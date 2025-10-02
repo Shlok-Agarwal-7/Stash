@@ -19,6 +19,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import OtpDialog from "./OtpDialog";
+import { createAccount } from "@/lib/userActions/user.actions";
 
 const authFormSchema = (formType: FormType) => {
   return z.object({
@@ -33,6 +34,7 @@ type FormType = "signin" | "signup";
 const AuthForm = ({ type }: { type: FormType }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [accountID, setAccountID] = useState(null);
 
   const formSchema = authFormSchema(type);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -43,10 +45,22 @@ const AuthForm = ({ type }: { type: FormType }) => {
     },
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setIsLoading(true);
+    try {
+      const user = await createAccount({
+        fullName: values.fullName || "",
+        email: values.email,
+      });
+
+      setAccountID(user.accountID);
+    } catch (error) {
+      setErrorMessage("Failed to create account,Please Try again");
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -116,7 +130,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
           : "Already have an account? Sign In"}
       </Link>
 
-      {true && <OtpDialog email="shlok@gmail.com"/>}
+      {/* {accountID && <OtpDialog email="shlok@gmail.com" />} */}
     </>
   );
 };
