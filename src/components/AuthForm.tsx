@@ -19,7 +19,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import OtpDialog from "./OtpDialog";
-import { createAccount } from "@/lib/userActions/user.actions";
+import { createAccount, signInUser } from "@/lib/userActions/user.actions";
+import { UserExistsError } from "@/lib/utils";
 
 const authFormSchema = (formType: FormType) => {
   return z.object({
@@ -48,15 +49,29 @@ const AuthForm = ({ type }: { type: FormType }) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
     try {
-      const user = await createAccount({
-        fullName: values.fullName || "",
-        email: values.email,
-      });
+      const user =
+        type === "signup"
+          ? await createAccount({
+              fullName: values.fullName || "",
+              email: values.email,
+            })
+          : await signInUser(values.email);
 
       setAccountID(user.accountID);
     } catch (error) {
-      setErrorMessage("Failed to create account,Please Try again");
-      console.log(error);
+      console.log("Error type:", error instanceof UserExistsError);
+      console.log("Error:", error);
+      if (error instanceof UserExistsError) {
+        setErrorMessage(
+          "This email is already registered. Please sign in instead."
+        );
+        form.setValue("email", "");
+      } else {
+        setErrorMessage(
+          "An unexpected error occurred. Please try again later."
+        );
+        console.error("Account creation error:", error);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -130,7 +145,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
           : "Already have an account? Sign In"}
       </Link>
 
-      {/* {accountID && <OtpDialog email="shlok@gmail.com" />} */}
+      {accountID && <OtpDialog email={"email"} accountID={accountID} />}
     </>
   );
 };

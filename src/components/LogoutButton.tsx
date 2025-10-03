@@ -1,9 +1,17 @@
+"use client";
+
 import Image from "next/image";
 import { Button } from "./ui/button";
+import { signOutUser } from "@/lib/userActions/user.actions";
 
 const LogoutButton = () => {
   return (
-    <Button variant="danger">
+    <Button
+      variant="danger"
+      onClick={async () => {
+        await signOutUser();
+      }}
+    >
       <Image
         src="/assets/icons/logout.svg"
         alt="logout"

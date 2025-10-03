@@ -1,5 +1,3 @@
-import Image from "next/image";
-import { Button } from "./ui/button";
 import Search from "./Search";
 import UploadButton from "./UploadButton";
 import LogoutButton from "./LogoutButton";

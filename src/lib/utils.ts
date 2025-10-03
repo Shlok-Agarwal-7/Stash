@@ -8,3 +8,13 @@ export function cn(...inputs: ClassValue[]) {
 export const parseStringify = (value: unknown) => {
   return JSON.parse(JSON.stringify(value));
 };
+
+// Custom Error classes
+
+export class UserExistsError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "UserExistsError";
+    Object.setPrototypeOf(this, UserExistsError.prototype);
+  }
+}

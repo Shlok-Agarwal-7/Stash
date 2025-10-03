@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 import {
@@ -15,21 +17,44 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+
 import Image from "next/image";
 import { Button } from "./ui/button";
+import { sendEmailOTP, verifyOTP } from "@/lib/userActions/user.actions";
+import { useRouter } from "next/navigation";
 
-const OtpDialog = ({ email }: { email: string }) => {
+const OtpDialog = ({
+  email,
+  accountID,
+}: {
+  email: string;
+  accountID: string;
+}) => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(true);
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = () => {
-    // verify OTP
+  const handleSubmit = async () => {
+    setIsLoading(true);
+
+    try {
+      const sessionID = await verifyOTP({ accountID, password });
+
+      if (sessionID) {
+        router.push("/dashboard");
+      }
+    } catch (error) {
+      console.log("failed to verify OTP", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleResendOTP = () => {
-    // resend OTP
+  const handleResendOTP = async () => {
+    await sendEmailOTP({ email });
   };
+  
   return (
     <>
       <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
@@ -53,7 +78,7 @@ const OtpDialog = ({ email }: { email: string }) => {
               <span className="text-primary-a0">{email}</span>.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <InputOTP maxLength={6}>
+          <InputOTP maxLength={6} value={password} onChange={setPassword}>
             <InputOTPGroup className="shad-otp">
               <InputOTPSlot
                 index={0}
@@ -102,7 +127,11 @@ const OtpDialog = ({ email }: { email: string }) => {
               </AlertDialogAction>
               <div className="subtitle-2 text-center">
                 Didn't get the code
-                <Button variant="link" className="text-primary-a10">
+                <Button
+                  variant="link"
+                  className="text-primary-a10"
+                  onClick={handleResendOTP}
+                >
                   Resend OTP
                 </Button>
               </div>
