@@ -42,37 +42,32 @@ export const createAccount = async ({
   fullName: string;
   email: string;
 }) => {
-  try {
-    const existingUser = await getUserByEmail(email);
+  const existingUser = await getUserByEmail(email);
 
-    if (existingUser)
-      throw new UserExistsError("User already exists please Sign-In");
+  if (existingUser)
+    return parseStringify({
+      accountID: null,
+      error: "User Already Exists,Please Sign-In",
+    });
 
-    const accountID = await sendEmailOTP({ email });
+  const accountID = await sendEmailOTP({ email });
 
-    if (!accountID) throw new Error("Failed to send OTP");
+  if (!accountID) throw new Error("Failed to send OTP");
 
-    const { database } = await createAdminClient();
+  const { database } = await createAdminClient();
 
-    await database.createRow(
-      appwriteConfig.databaseId,
-      appwriteConfig.userCollectionId,
-      ID.unique(),
-      {
-        fullName,
-        email,
-        accountID,
-      }
-    );
-
-    return parseStringify({ accountID });
-  } catch (error) {
-    if (error instanceof UserExistsError) {
-      throw error;
+  await database.createRow(
+    appwriteConfig.databaseId,
+    appwriteConfig.userCollectionId,
+    ID.unique(),
+    {
+      fullName,
+      email,
+      accountID,
     }
+  );
 
-    handleError(error, "Failed to create account");
-  }
+  return parseStringify({ accountID });
 };
 
 export const verifyOTP = async ({
@@ -95,7 +90,10 @@ export const verifyOTP = async ({
     });
 
     return parseStringify({ sessionID: session.$id });
-  } catch (error) {
+  } catch (error: any) {
+    if (error?.code === 401) {
+      throw new Error("Invalid OTP provided");
+    }
     handleError(error, "Failed to verify OTP");
   }
 };
@@ -121,5 +119,8 @@ export const signInUser = async (email: string) => {
     return parseStringify({ accountID: existingUser.accountID });
   }
 
-  return parseStringify({ accountID: null, error: "User not Found" });
+  return parseStringify({
+    accountID: null,
+    error: "User Not Found,Please Sign-Up",
+  });
 };

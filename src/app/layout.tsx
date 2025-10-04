@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Poppins, Geist } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner"
+
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -22,6 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.variable} antialiased hide-scrollbar`}>
         {children}
+        <Toaster/>
       </body>
     </html>
   );

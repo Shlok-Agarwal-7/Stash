@@ -18,6 +18,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
+import { toast } from "sonner";
+
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { sendEmailOTP, verifyOTP } from "@/lib/userActions/user.actions";
@@ -35,7 +37,8 @@ const OtpDialog = ({
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     setIsLoading(true);
 
     try {
@@ -45,7 +48,7 @@ const OtpDialog = ({
         router.push("/dashboard");
       }
     } catch (error) {
-      console.log("failed to verify OTP", error);
+      toast.error("Invalid OTP,Please check your OTP");
     } finally {
       setIsLoading(false);
     }
@@ -54,7 +57,7 @@ const OtpDialog = ({
   const handleResendOTP = async () => {
     await sendEmailOTP({ email });
   };
-  
+
   return (
     <>
       <AlertDialog open={isOpen} onOpenChange={setIsOpen}>

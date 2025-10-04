@@ -20,7 +20,7 @@ import Image from "next/image";
 import { useState } from "react";
 import OtpDialog from "./OtpDialog";
 import { createAccount, signInUser } from "@/lib/userActions/user.actions";
-import { UserExistsError } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 const authFormSchema = (formType: FormType) => {
   return z.object({
@@ -36,7 +36,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [accountID, setAccountID] = useState(null);
-
+  const router = useRouter();
   const formSchema = authFormSchema(type);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -57,21 +57,14 @@ const AuthForm = ({ type }: { type: FormType }) => {
             })
           : await signInUser(values.email);
 
-      setAccountID(user.accountID);
+      if (user.accountID === null) {
+        setErrorMessage(user.error);
+        const href = type === "signin" ? "/signup" : "/signin";
+        router.push(href);
+      } else setAccountID(user.accountID);
     } catch (error) {
-      console.log("Error type:", error instanceof UserExistsError);
-      console.log("Error:", error);
-      if (error instanceof UserExistsError) {
-        setErrorMessage(
-          "This email is already registered. Please sign in instead."
-        );
-        form.setValue("email", "");
-      } else {
-        setErrorMessage(
-          "An unexpected error occurred. Please try again later."
-        );
-        console.error("Account creation error:", error);
-      }
+      setErrorMessage("An unexpected error occurred. Please try again later.");
+      console.error("Account creation error:", error);
     } finally {
       setIsLoading(false);
     }
