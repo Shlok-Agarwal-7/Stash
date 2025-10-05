@@ -83,30 +83,12 @@ const OtpDialog = ({
           </AlertDialogHeader>
           <InputOTP maxLength={6} value={password} onChange={setPassword}>
             <InputOTPGroup className="shad-otp">
-              <InputOTPSlot
-                index={0}
-                className="text-dark-a0 justify-center flex border-2 rounded-lg"
-              />
-              <InputOTPSlot
-                index={1}
-                className=" text-dark-a0 justify-center flex border-2 rounded-lg"
-              />
-              <InputOTPSlot
-                index={2}
-                className="text-dark-a0  justify-center flex border-2 rounded-lg"
-              />
-              <InputOTPSlot
-                index={3}
-                className="text-dark-a0 justify-center flex border-2 rounded-lg"
-              />
-              <InputOTPSlot
-                index={4}
-                className="text-dark-a0 justify-center flex border-2 rounded-lg"
-              />
-              <InputOTPSlot
-                index={5}
-                className="text-dark-a0 justify-center flex border-2 rounded-lg"
-              />
+              <InputOTPSlot index={0} className="shad-otp-slot" />
+              <InputOTPSlot index={1} className="shad-otp-slot" />
+              <InputOTPSlot index={2} className="shad-otp-slot" />
+              <InputOTPSlot index={3} className="shad-otp-slot" />
+              <InputOTPSlot index={4} className="shad-otp-slot" />
+              <InputOTPSlot index={5} className="shad-otp-slot" />
             </InputOTPGroup>
           </InputOTP>
           <AlertDialogFooter>

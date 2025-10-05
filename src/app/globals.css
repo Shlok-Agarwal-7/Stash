@@ -142,9 +142,17 @@
   @apply w-full flex gap-1 sm:gap-2 justify-between;
 }
 
-/* @utility shad-otp-slot {
-  @apply text-[40px] font-medium rounded-xl ring-primary-a10 shadow-drop-1 text-primary-a10 justify-center flex border-2  size-12 md:size-16 gap-5;
-} */
+@utility uploader-preview-list {
+  @apply fixed bottom-10 right-10 z-50 flex size-full h-fit max-w-[480px] flex-col gap-3 rounded-[20px] bg-surface-a20 p-7;
+}
+
+@utility uploader-preview-item {
+  @apply flex items-center justify-between  gap-3 rounded-xl p-3;
+}
+
+@utility shad-otp-slot {
+  @apply text-[40px] font-medium rounded-xl ring-primary-a10 text-primary-a10 justify-center flex border-2  size-12 md:size-16 gap-5;
+}
 
 /*---break--- */
 @theme inline {

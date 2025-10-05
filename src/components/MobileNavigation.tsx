@@ -18,7 +18,7 @@ import LogoutButton from "./LogoutButton";
 import { Separator } from "@radix-ui/react-separator";
 import Search from "./Search";
 
-const MobileNavigation = () => {
+const MobileNavigation = ({ ...currentUser }: UserProps) => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -40,6 +40,18 @@ const MobileNavigation = () => {
             <SheetTitle className="h2 text-primary-a0 italic mb-4">
               Stash
             </SheetTitle>
+            <div className="flex-center gap-4 w-full max-w-[220px]">
+              <Image
+                src="/assets/images/avatar.png"
+                alt="avatar"
+                height={48}
+                width={48}
+              />
+              <div>
+                <p className="h3">{currentUser.fullName}</p>
+                <p className="caption">{currentUser.email}</p>
+              </div>
+            </div>
             <Separator className="bg-primary-a0/10 data-[orientation=horizontal]:h-[2px]" />
             <div className="w-full flex flex-col flex-1 items-center gap-5 my-4">
               {SideBarItems.map(({ name, icon, link }, key) => {
@@ -63,7 +75,7 @@ const MobileNavigation = () => {
             </div>
             <Separator className="bg-primary-a0/10 data-[orientation=horizontal]:h-[2px]" />
             <div className="w-full flex justify-between mt-6 ">
-              <UploadButton />
+              <UploadButton {...currentUser} />
               <LogoutButton />
             </div>
           </SheetHeader>

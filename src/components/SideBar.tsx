@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-const SideBar = () => {
+const SideBar = ({ fullName, avatar, email }: UserProps) => {
   const pathname = usePathname();
 
   return (
@@ -49,8 +49,8 @@ const SideBar = () => {
           width={48}
         />
         <div>
-          <p className="h3">Shlok Agarwal</p>
-          <p className="caption">shlok@gmail.com</p>
+          <p className="h3">{fullName}</p>
+          <p className="caption">{email}</p>
         </div>
       </div>
     </div>

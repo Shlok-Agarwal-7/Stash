@@ -3,7 +3,7 @@
 import { createAdminClient, createSessionClient } from "@/appwrite";
 import { appwriteConfig } from "@/appwrite/config";
 import { ID, Query } from "node-appwrite";
-import { parseStringify, UserExistsError } from "../utils";
+import { parseStringify} from "../utils";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -98,8 +98,34 @@ export const verifyOTP = async ({
   }
 };
 
+export const getCurrentUser = async () => {
+  const client = await createSessionClient();
+  if (!client) {
+    return null;
+  }
+
+  const { account, database } = client;
+
+  const result = await account.get();
+
+  const user = await database.listRows(
+    appwriteConfig.databaseId,
+    appwriteConfig.userCollectionId,
+    [Query.equal("accountID", [result.$id])]
+  );
+
+  if (user.total <= 0) return null;
+
+  return parseStringify(user.rows[0]);
+};
+
 export const signOutUser = async () => {
-  const { account } = await createSessionClient();
+  const client = await createSessionClient();
+  if (!client) {
+    return null;
+  }
+
+  const { account } = client;
 
   try {
     await account.deleteSession("current");
