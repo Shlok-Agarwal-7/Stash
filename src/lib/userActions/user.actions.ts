@@ -3,7 +3,7 @@
 import { createAdminClient, createSessionClient } from "@/appwrite";
 import { appwriteConfig } from "@/appwrite/config";
 import { ID, Query } from "node-appwrite";
-import { parseStringify} from "../utils";
+import { parseStringify } from "../utils";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -115,6 +115,8 @@ export const getCurrentUser = async () => {
   );
 
   if (user.total <= 0) return null;
+
+  console.log(user.rows[0]);
 
   return parseStringify(user.rows[0]);
 };

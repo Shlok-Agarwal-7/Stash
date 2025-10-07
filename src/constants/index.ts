@@ -7,12 +7,12 @@ export const SideBarItems = [
   {
     name: "Documents",
     icon: "/assets/icons/documents.svg",
-    link: "/documents",
+    link: "/document",
   },
   {
     name: "Images",
     icon: "/assets/icons/images.svg",
-    link: "/images",
+    link: "/image",
   },
   {
     name: "Media",
@@ -20,9 +20,9 @@ export const SideBarItems = [
     link: "/media",
   },
   {
-    name: "Others",
+    name: "Other",
     icon: "/assets/icons/others.svg",
-    link: "/others",
+    link: "/other",
   },
 ];
 

@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import { usePathname } from "next/navigation";
 import { UploadFile } from "@/lib/userActions/file.actions";
 
-const UploadButton = ({ accountID, userID }: UserProps) => {
+const UploadButton = ({ accountID, $id }: UserProps) => {
   const [files, setFiles] = useState<File[]>([]);
   const path = usePathname();
 
@@ -28,7 +28,7 @@ const UploadButton = ({ accountID, userID }: UserProps) => {
           return toast.error(`The file ${file.name} is too large (>=30 MB)`);
         }
 
-        return UploadFile({ file, ownerID : userID , accountID, path }).then(
+        return UploadFile({ file, ownerID: $id, accountID, path }).then(
           (uploadedFile) => {
             if (uploadedFile) {
               setFiles((prevFiles) =>
@@ -41,7 +41,7 @@ const UploadButton = ({ accountID, userID }: UserProps) => {
 
       await Promise.all(uploadPromises);
     },
-    [userID, accountID, path]
+    [$id, accountID, path]
   );
 
   const handleRemoveFile = (
