@@ -13,7 +13,6 @@ interface UserProps {
   $id: string;
 }
 
-interface fetchFileType{
-  userID : string;
-  type : string;
+interface FileCardProps{
+  file : File;
 }

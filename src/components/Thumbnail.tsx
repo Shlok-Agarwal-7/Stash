@@ -9,7 +9,7 @@ const Thumbnail = ({
   extension: string;
 }) => {
   return (
-    <>
+    <figure className="thumbnail">
       <Image
         src={getFileIcon(extension, type)}
         height={100}
@@ -17,7 +17,7 @@ const Thumbnail = ({
         alt="file-icon"
         className="size-9 object-contain"
       />
-    </>
+    </figure>
   );
 };
 

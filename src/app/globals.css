@@ -154,6 +154,14 @@
   @apply text-[40px] font-medium rounded-xl ring-primary-a10 text-primary-a10 justify-center flex border-2  size-12 md:size-16 gap-5;
 }
 
+@utility file-card {
+  @apply bg-surface-a20 rounded-2xl flex flex-col gap-6 cursor-pointer transition-all hover:shadow-md max-w-[220px];
+}
+
+@utility thumbnail {
+  @apply flex-center size-[50px] min-w-[50px] overflow-hidden rounded-full bg-primary-a20
+}
+
 /*---break--- */
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
