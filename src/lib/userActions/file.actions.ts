@@ -94,3 +94,74 @@ export const fetchFiles = async ({ type }: { type: string }) => {
     handleError(error, "Unable to fetch files at this moment");
   }
 };
+
+export const deleteFile = async ({ file }: { file: any }) => {
+  const { database, storage } = await createAdminClient();
+
+  try {
+    await storage.deleteFile(appwriteConfig.bucketId, file.bucketFileID);
+    const res = await database.deleteRow(
+      appwriteConfig.databaseId,
+      appwriteConfig.filesCollectionId,
+      file.$id
+    );
+
+    return parseStringify({ res });
+  } catch (e) {
+    handleError(e, "Delete operation failed");
+  }
+};
+
+export const rename = async ({
+  file,
+  newName,
+}: {
+  file: any;
+  newName: string;
+}) => {
+  const { database } = await createAdminClient();
+
+  try {
+    const res = await database.updateRow(
+      appwriteConfig.databaseId,
+      appwriteConfig.filesCollectionId,
+      file.$id,
+      { name: newName }
+    );
+
+    return parseStringify({ res });
+  } catch (e) {
+    handleError(e, "Failed to Rename the file");
+  }
+};
+
+export const addUser = async ({
+  file,
+  newUserEmail,
+}: {
+  file: any;
+  newUserEmail: string;
+}) => {
+  const { database } = await createAdminClient();
+
+  try {
+    if (file.users && file.users.includes(newUserEmail)) {
+      throw new Error("User already has access to this file");
+    }
+
+    const updatedUsers = [...(file.users || []), newUserEmail];
+
+    const updatedFile = await database.updateRow(
+      appwriteConfig.databaseId,
+      appwriteConfig.filesCollectionId,
+      file.$id,
+      {
+        users: updatedUsers,
+      }
+    );
+    return parseStringify(updatedFile);
+  } catch (e) {
+    handleError(e, "Couldn't share the file to user");
+  }
+
+};
