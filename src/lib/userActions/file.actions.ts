@@ -95,16 +95,28 @@ export const fetchFiles = async ({ type }: { type: string }) => {
   }
 };
 
-export const deleteFile = async ({ file }: { file: any }) => {
+export const deleteFile = async ({
+  fileID,
+  fileBucketFileID,
+  path,
+}: {
+  fileID: any;
+  fileBucketFileID: any;
+  path: any;
+}) => {
   const { database, storage } = await createAdminClient();
 
   try {
-    await storage.deleteFile(appwriteConfig.bucketId, file.bucketFileID);
     const res = await database.deleteRow(
       appwriteConfig.databaseId,
       appwriteConfig.filesCollectionId,
-      file.$id
+      fileID
     );
+
+    if (res)
+      await storage.deleteFile(appwriteConfig.bucketId, fileBucketFileID);
+
+    revalidatePath(path);
 
     return parseStringify({ res });
   } catch (e) {
@@ -112,12 +124,14 @@ export const deleteFile = async ({ file }: { file: any }) => {
   }
 };
 
-export const rename = async ({
-  file,
+export const renameFile = async ({
+  fileID,
   newName,
+  path,
 }: {
-  file: any;
+  fileID: any;
   newName: string;
+  path: string;
 }) => {
   const { database } = await createAdminClient();
 
@@ -125,9 +139,11 @@ export const rename = async ({
     const res = await database.updateRow(
       appwriteConfig.databaseId,
       appwriteConfig.filesCollectionId,
-      file.$id,
+      fileID,
       { name: newName }
     );
+
+    revalidatePath(path);
 
     return parseStringify({ res });
   } catch (e) {
@@ -135,33 +151,31 @@ export const rename = async ({
   }
 };
 
-export const addUser = async ({
-  file,
-  newUserEmail,
+export const shareFileToUser = async ({
+  fileID,
+  emails,
+  path,
 }: {
-  file: any;
-  newUserEmail: string;
+  fileID: any;
+  emails: string[];
+  path: string;
 }) => {
   const { database } = await createAdminClient();
 
   try {
-    if (file.users && file.users.includes(newUserEmail)) {
-      throw new Error("User already has access to this file");
-    }
-
-    const updatedUsers = [...(file.users || []), newUserEmail];
-
     const updatedFile = await database.updateRow(
       appwriteConfig.databaseId,
       appwriteConfig.filesCollectionId,
-      file.$id,
+      fileID,
       {
-        users: updatedUsers,
+        users: emails,
       }
     );
+
+    revalidatePath(path);
+
     return parseStringify(updatedFile);
   } catch (e) {
     handleError(e, "Couldn't share the file to user");
   }
-
 };
