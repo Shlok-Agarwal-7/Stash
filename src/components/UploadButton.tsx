@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { getFileType } from "@/lib/utils";
+import { convertFileToUrl, getFileType } from "@/lib/utils";
 import Thumbnail from "./Thumbnail";
 import { MAX_FILE_SIZE } from "@/constants";
 import { toast } from "sonner";
@@ -73,7 +73,11 @@ const UploadButton = ({ accountID, $id }: UserProps) => {
             const { type, extension } = getFileType(file.name);
             return (
               <li key={`${file.name}-${key}`} className="uploader-preview-item">
-                <Thumbnail type={type} extension={extension} />
+                <Thumbnail
+                  type={type}
+                  extension={extension}
+                  url={convertFileToUrl(file)}
+                />
                 <div className="flex items-center">
                   <h3 className="h3">{file.name}</h3>
                 </div>

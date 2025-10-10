@@ -1,24 +1,61 @@
-import { getFileIcon } from "@/lib/utils";
+import React from "react";
 import Image from "next/image";
+import { cn, getFileIcon } from "@/lib/utils";
 
-const Thumbnail = ({
-  type,
-  extension,
-}: {
+interface Props {
   type: string;
   extension: string;
-}) => {
+  url?: string;
+  imageClassName?: string;
+  className?: string;
+}
+
+export const Thumbnail = ({
+  type,
+  extension,
+  url = "",
+  imageClassName,
+  className,
+}: Props) => {
+  const isImage = type === "image" && extension !== "svg";
+
   return (
-    <figure className="thumbnail">
+    <figure className={cn("thumbnail", className)}>
       <Image
-        src={getFileIcon(extension, type)}
-        height={100}
+        src={isImage ? url : getFileIcon(extension, type)}
+        alt="thumbnail"
         width={100}
-        alt="file-icon"
-        className="size-9 object-contain"
+        height={100}
+        className={cn(
+          "size-8 object-contain",
+          imageClassName,
+          isImage && "thumbnail-image",
+        )}
       />
     </figure>
   );
 };
+export default Thumbnail;// import { getFileIcon } from "@/lib/utils";
+// import Image from "next/image";
 
-export default Thumbnail;
+// const Thumbnail = ({
+//   type,
+//   extension,
+// }: {
+//   type: string;
+//   extension: string;
+// }) => {
+//   return (
+//     <figure className="thumbnail">
+//       <Image
+//         src={getFileIcon(extension, type)}
+//         height={100}
+//         width={100}
+//         alt="file-icon"
+//         className="size-9 object-contain"
+//       />
+//     </figure>
+//   );
+// };
+
+// export default Thumbnail;

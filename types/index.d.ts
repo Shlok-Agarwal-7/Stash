@@ -13,6 +13,8 @@ interface UserProps {
   $id: string;
 }
 
-interface FileCardProps{
-  file : File;
+interface ActionType {
+  name: string;
+  icon: string;
+  value: string;
 }
