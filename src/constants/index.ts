@@ -31,6 +31,7 @@ export const ActionDropDownItems = [
   { name: "Download", icon: "/assets/icons/download.svg", value: "download" },
   { name: "Details", icon: "/assets/icons/info.svg", value: "rename" },
   { name: "Share", icon: "/assets/icons/share.svg", value: "share" },
+  { name: "Delete", icon: "/assets/icons/delete.svg", value: "delete" },
 ];
 
 export const MAX_FILE_SIZE = 1024 * 1024 * 30;
