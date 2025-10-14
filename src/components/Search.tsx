@@ -12,7 +12,7 @@ const Search = () => {
       <input
         type="text"
         placeholder="Search in your stash..."
-        className="bg-transparent placeholder:text-muted-foreground focus:outline-none ml-2 hover:placeholder:text-primary-a20"
+        className="input"
       />
     </div>
   );

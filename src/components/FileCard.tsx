@@ -4,7 +4,6 @@ import Link from "next/link";
 import ActionsDropdown from "./ActionsDropdown";
 
 const FileCard = ({ file }: { file: any }) => {
-  console.log(file);
   return (
     <div className="file-card p-6">
       <div className="flex justify-between">

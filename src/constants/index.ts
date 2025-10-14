@@ -29,7 +29,7 @@ export const SideBarItems = [
 export const ActionDropDownItems = [
   { name: "Rename", icon: "/assets/icons/edit.svg", value: "rename" },
   { name: "Download", icon: "/assets/icons/download.svg", value: "download" },
-  { name: "Details", icon: "/assets/icons/info.svg", value: "rename" },
+  { name: "Details", icon: "/assets/icons/info.svg", value: "details" },
   { name: "Share", icon: "/assets/icons/share.svg", value: "share" },
   { name: "Delete", icon: "/assets/icons/delete.svg", value: "delete" },
 ];

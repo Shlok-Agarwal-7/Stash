@@ -26,7 +26,8 @@ import Link from "next/link";
 import { constructDownloadUrl } from "@/lib/utils";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { ShareFile, FileDetails } from "./ActionModalContent";
+import { ShareFile } from "./ShareFile";
+import { FileDetails } from "./FileDetails";
 import { usePathname } from "next/navigation";
 import {
   deleteFile,
@@ -48,6 +49,7 @@ const ActionsDropdown = ({ file }: { file: any }) => {
     setIsDropdownOpen(false);
     setAction(null);
     setFileName(file.name);
+    setEmails([]);
   };
 
   const handleAction = async () => {
@@ -107,27 +109,25 @@ const ActionsDropdown = ({ file }: { file: any }) => {
     if (action === null) return null;
     const { value, name } = action;
     return (
-      <DialogContent className="bg-surface-a30 text-dark-a0">
+      <DialogContent className="bg-surface-a10 text-dark-a0">
         <DialogHeader>
           <DialogTitle>{name}</DialogTitle>
-          <DialogDescription>
-            {value === "rename" && (
-              <Input
-                value={fileName}
-                onChange={(e) => setFileName(e.target.value)}
-                className="shad-input"
-              />
-            )}
+          {value === "rename" && (
+            <Input
+              value={fileName}
+              onChange={(e) => setFileName(e.target.value)}
+              className="shad-input mt-2"
+            />
+          )}
 
-            {value === "share" && (
-              <ShareFile
-                file={file}
-                onInputChange={setEmails}
-                onRemove={handleRemoveUser}
-              />
-            )}
-            {value === "details" && <FileDetails file={file} />}
-          </DialogDescription>
+          {value === "share" && (
+            <ShareFile
+              file={file}
+              onInputChange={setEmails}
+              onRemove={handleRemoveUser}
+            />
+          )}
+          {value === "details" && <FileDetails file={file} />}
         </DialogHeader>
         {["rename", "delete", "share"].includes(value) && (
           <DialogFooter>

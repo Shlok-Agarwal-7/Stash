@@ -24,6 +24,23 @@ const getUserByEmail = async (email: string) => {
   return result.total > 0 ? result.rows[0] : null;
 };
 
+export const getUserById = async (userId: string) => {
+  try {
+    const { database } = await createAdminClient();
+    
+    const user = await database.getRow(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      userId
+    );
+    
+    return user;
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return null;
+  }
+};
+
 export const sendEmailOTP = async ({ email }: { email: string }) => {
   const { account } = await createAdminClient();
 
@@ -116,7 +133,6 @@ export const getCurrentUser = async () => {
 
   if (user.total <= 0) return null;
 
-  console.log(user.rows[0]);
 
   return parseStringify(user.rows[0]);
 };
