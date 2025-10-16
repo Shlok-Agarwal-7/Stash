@@ -16,7 +16,7 @@ const HomeLayout = async ({ children }: { children: React.ReactNode }) => {
       <div className="w-full">
         <Header {...currentUser} />
         <MobileNavigation {...currentUser} />
-        <main className=" p-6 flex">
+      <main className="p-2 flex">
           <div className="w-full max-w-7xl">{children}</div>
         </main>
       </div>

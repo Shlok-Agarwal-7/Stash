@@ -63,7 +63,7 @@ export const UploadFile = async ({
 
 const getQueries = (currentUser: any, type: string) => {
   const queries = [
-    // Query.equal("type", [type]),
+    Query.equal("type", [type]),
     Query.or([
       Query.equal("owner", [currentUser.$id]),
       Query.contains("users", [currentUser.email]),
