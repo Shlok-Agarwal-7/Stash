@@ -1,8 +1,11 @@
 import FileCard from "@/components/FileCard";
 import { fetchFiles } from "@/lib/userActions/file.actions";
 
-const Page = async ({ params }: { params: { type: string } }) => {
-  const files = await fetchFiles({ type: params.type });
+const Page = async ({ params, searchParams }: SearchParamProps) => {
+  const files = await fetchFiles({
+    type: params.type,
+    searchQuery: searchParams.query || "",
+  });
 
   return (
     <div className="w-full overflow-y-auto px-4">

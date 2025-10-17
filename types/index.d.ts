@@ -18,3 +18,8 @@ interface ActionType {
   icon: string;
   value: string;
 }
+
+interface SearchParamProps {
+  params: { type: string };
+  searchParams: { query?: string };
+}

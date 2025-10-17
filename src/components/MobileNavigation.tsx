@@ -23,9 +23,11 @@ const MobileNavigation = ({ ...currentUser }: UserProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="lg:hidden flex justify-between items-center p-4 bg-surface-a10">
+    <header className="lg:hidden flex justify-between items-center p-4 gap-2 bg-surface-a10">
       <p className="h2 text-primary-a0 italic">Stash</p>
+      <div className="w-full max-w-[380px]">
       <Search />
+      </div>
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger>
           <Image
