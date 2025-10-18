@@ -51,7 +51,7 @@ export const getFileType = (fileName: string) => {
     return { type: "document", extension };
   if (imageExtensions.includes(extension)) return { type: "image", extension };
   if (videoExtensions.includes(extension)) return { type: "video", extension };
-  if (audioExtensions.includes(extension)) return { type: "audio", extension };
+  if (audioExtensions.includes(extension)) return { type: "media", extension };
 
   return { type: "other", extension };
 };

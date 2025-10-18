@@ -21,7 +21,11 @@ const Search = () => {
   useEffect(() => {
     if (query) {
       const getFiles = async () => {
-        const files = await fetchFiles({ type: "", searchQuery: query });
+        const files = await fetchFiles({
+          types: [],
+          searchQuery: query,
+          sort: "",
+        });
 
         setResults(files.rows);
         setIsOpen(true);

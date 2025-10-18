@@ -61,7 +61,12 @@ export const UploadFile = async ({
   }
 };
 
-const getQueries = (currentUser: any, type: string, searchQuery: string) => {
+const getQueries = (
+  currentUser: any,
+  types: string[],
+  searchQuery: string,
+  sort: string
+) => {
   const queries = [
     Query.or([
       Query.equal("owner", [currentUser.$id]),
@@ -69,18 +74,26 @@ const getQueries = (currentUser: any, type: string, searchQuery: string) => {
     ]),
   ];
 
-  if (type) queries.push(Query.equal("type", [type]));
+  if (types) queries.push(Query.equal("type", types));
   if (searchQuery) queries.push(Query.contains("name", [searchQuery]));
+  if (sort) {
+    const [sortBy, OrderBy] = sort.split("-");
+    queries.push(
+      OrderBy === "asc" ? Query.orderAsc(sortBy) : Query.orderDesc(sortBy)
+    );
+  }
 
   return queries;
 };
 
 export const fetchFiles = async ({
-  type,
+  types,
   searchQuery,
+  sort = "$createdAt-desc",
 }: {
-  type: string;
+  types: string[];
   searchQuery: string;
+  sort: string;
 }) => {
   const { database } = await createAdminClient();
 
@@ -89,7 +102,7 @@ export const fetchFiles = async ({
 
     if (!currentUser) throw new Error("User not found");
 
-    const queries = getQueries(currentUser, type, searchQuery);
+    const queries = getQueries(currentUser, types, searchQuery, sort);
 
     const files = await database.listRows(
       appwriteConfig.databaseId,

@@ -34,4 +34,13 @@ export const ActionDropDownItems = [
   { name: "Delete", icon: "/assets/icons/delete.svg", value: "delete" },
 ];
 
+export const SortItems = [
+  { name: "Date Created(newest)", value: "$createdAt-desc" },
+  { name: "Date Created(oldest)", value: "$createdAt-asc" },
+  { name: "Name(A-Z)", value: "name-asc" },
+  { name: "Name(Z-A)", value: "name-desc" },
+  { name: "Size (lowest)", value: "size-asc" },
+  { name: "Size (highest)", value: "size-desc" },
+];
+
 export const MAX_FILE_SIZE = 1024 * 1024 * 30;

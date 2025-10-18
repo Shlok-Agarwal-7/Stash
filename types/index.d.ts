@@ -21,5 +21,5 @@ interface ActionType {
 
 interface SearchParamProps {
   params: { type: string };
-  searchParams: { query?: string };
+  searchParams: { query?: string; sort?: string };
 }

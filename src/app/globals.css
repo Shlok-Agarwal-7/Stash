@@ -175,7 +175,7 @@
 }
 
 @utility file-card {
-  @apply bg-surface-a20 rounded-2xl flex flex-col gap-6 transition-all hover:shadow-md max-w-[220px];
+  @apply bg-surface-a20 rounded-2xl flex gap-4 transition-all md:flex-col hover:shadow-md;
 }
 
 @utility thumbnail {
