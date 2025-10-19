@@ -5,7 +5,6 @@ import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -23,7 +22,7 @@ import {
 import Image from "next/image";
 import { ActionDropDownItems } from "@/constants";
 import Link from "next/link";
-import { constructDownloadUrl } from "@/lib/utils";
+import { constructDownloadUrl, isToastType } from "@/lib/utils";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { ShareFile } from "./ShareFile";
@@ -34,6 +33,7 @@ import {
   renameFile,
   shareFileToUser,
 } from "@/lib/userActions/file.actions";
+import { toast } from "sonner";
 
 const ActionsDropdown = ({ file }: { file: any }) => {
   const [action, setAction] = useState<ActionType | null>(null);
@@ -42,6 +42,7 @@ const ActionsDropdown = ({ file }: { file: any }) => {
   const [fileName, setFileName] = useState(file.name);
   const [isLoading, setIsLoading] = useState(false);
   const [emails, setEmails] = useState<string[]>([]);
+  const [toastMsg, setToastMsg] = useState<ToastMsgType>("");
   const path = usePathname();
 
   const closeAllModals = () => {
@@ -83,10 +84,14 @@ const ActionsDropdown = ({ file }: { file: any }) => {
         actionResponse[action?.value as keyof typeof actionResponse];
       const success = await handler();
       if (success) {
+        if (toastMsg!= ""){
+          toast.success(`The File was successfully ${toastMsg}ed`)
+          setToastMsg("");
+        }
         closeAllModals();
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -172,11 +177,14 @@ const ActionsDropdown = ({ file }: { file: any }) => {
               key={key}
               onClick={() => {
                 setAction(item);
-
                 if (
                   ["rename", "details", "share", "delete"].includes(item.value)
-                )
+                ) {
                   setIsModalOpen(true);
+                }
+                if (isToastType(item.value)) {
+                  setToastMsg(item.value);
+                }
               }}
             >
               {item.value === "download" ? (

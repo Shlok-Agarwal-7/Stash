@@ -21,6 +21,7 @@ import { useState } from "react";
 import OtpDialog from "./OtpDialog";
 import { createAccount, signInUser } from "@/lib/userActions/user.actions";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const authFormSchema = (formType: FormType) => {
   return z.object({
@@ -29,8 +30,6 @@ const authFormSchema = (formType: FormType) => {
       formType === "signup" ? z.string().min(2).max(50) : z.string().optional(),
   });
 };
-
-type FormType = "signin" | "signup";
 
 const AuthForm = ({ type }: { type: FormType }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -58,13 +57,13 @@ const AuthForm = ({ type }: { type: FormType }) => {
           : await signInUser(values.email);
 
       if (user.accountID === null) {
-        setErrorMessage(user.error);
+        toast.error(user.error);
         const href = type === "signin" ? "/signup" : "/signin";
         router.push(href);
       } else setAccountID(user.accountID);
     } catch (error) {
-      setErrorMessage("An unexpected error occurred. Please try again later.");
-      console.error("Account creation error:", error);
+      toast.error("An unexpected error occurred. Please try again later.");
+      // console.error("Account creation error:", error);
     } finally {
       setIsLoading(false);
     }

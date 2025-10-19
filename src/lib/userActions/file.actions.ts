@@ -9,7 +9,7 @@ import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "./user.actions";
 
 const handleError = (error: unknown, message: string) => {
-  console.log(error, message);
+  // console.log(error, message);
   throw error;
 };
 

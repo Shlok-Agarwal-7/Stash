@@ -18,7 +18,7 @@ const SortBySelector = () => {
   const currentSort = searchParams.get("sort") || SortItems[0].value;
 
   const handleSort = (value: string) => {
-    console.log(path);
+    // console.log(path);
     const params = new URLSearchParams(searchParams);
     params.set("sort", value);
 

@@ -46,6 +46,7 @@ const OtpDialog = ({
 
       if (sessionID) {
         router.push("/dashboard");
+        toast.success("Welcome To Your Stash");
       }
     } catch (error) {
       toast.error("Invalid OTP,Please check your OTP");

@@ -2,13 +2,11 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ImageThumbnail } from "./ImageThumbnail";
 
-interface Props {
-  file: any;
-  onInputChange: React.Dispatch<React.SetStateAction<string[]>>;
-  onRemove: (email: string) => void;
-}
-
-export const ShareFile = ({ file, onInputChange, onRemove }: Props) => {
+export const ShareFile = ({
+  file,
+  onInputChange,
+  onRemove,
+}: ShareFileProps) => {
   return (
     <>
       <ImageThumbnail file={file} />

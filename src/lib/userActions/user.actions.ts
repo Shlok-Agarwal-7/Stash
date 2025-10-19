@@ -8,7 +8,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 const handleError = (error: unknown, message: string) => {
-  console.log(error, message);
+  // console.log(error, message);
   throw error;
 };
 
@@ -27,13 +27,13 @@ const getUserByEmail = async (email: string) => {
 export const getUserById = async (userId: string) => {
   try {
     const { database } = await createAdminClient();
-    
+
     const user = await database.getRow(
       appwriteConfig.databaseId,
       appwriteConfig.userCollectionId,
       userId
     );
-    
+
     return user;
   } catch (error) {
     console.error("Error fetching user:", error);
@@ -132,7 +132,6 @@ export const getCurrentUser = async () => {
   );
 
   if (user.total <= 0) return null;
-
 
   return parseStringify(user.rows[0]);
 };

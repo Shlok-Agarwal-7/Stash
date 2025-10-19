@@ -172,3 +172,6 @@ export const formatDateTime = (isoString: string | null | undefined) => {
 
   return `${time}, ${day} ${month}`;
 };
+
+export const isToastType = (v: string): v is ToastMsgType =>
+    v === "rename" || v === "delete" || v === "share";

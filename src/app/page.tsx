@@ -9,10 +9,10 @@ export default function Home() {
           <h1 className="text-2xl font-bold text-primary-a0">Stash</h1>
           <nav className="space-x-4">
             <Link
-              href="pricing"
+              href="signin"
               className="text-primary-a0 hover:text-primary-a10"
             >
-              Pricing
+              Sign In
             </Link>
             <Link
               href="signup"
