@@ -25,21 +25,29 @@ const UploadButton = ({ accountID, $id }: UserProps) => {
             prevFiles.filter((f) => f.name !== file.name)
           );
 
-          return toast.error(`The file ${file.name} is too large (>=30 MB)`);
+          return Promise.reject(new Error(`The file ${file.name} is too large (>=30 MB)`)) 
         }
 
-        return UploadFile({ file, ownerID: $id, accountID, path }).then(
-          (uploadedFile) => {
-            if (uploadedFile) {
-              setFiles((prevFiles) =>
-                prevFiles.filter((f) => f.name !== file.name)
-              );
-            }
-          }
-        );
+        return UploadFile({ file, ownerID: $id, accountID, path });
       });
 
-      await Promise.all(uploadPromises);
+      try{
+        toast.promise(
+          Promise.all(uploadPromises),
+          {
+            loading : "Uploading files...",
+            success : (data) => {
+              setFiles([]);
+              return "Upload complete"
+            },
+            error : (err : any) => {
+              return err?.message || "Upload failed"
+            },
+          },
+        );
+      }catch{
+
+      }
     },
     [$id, accountID, path]
   );

@@ -40,5 +40,6 @@ interface ThumbnailProps {
 
 type FormType = "signin" | "signup";
 
-
 type ToastMsgType = "rename" | "delete" | "share" | "";
+
+type FileType = "other" | "audio" | "video" | "image" | "document";

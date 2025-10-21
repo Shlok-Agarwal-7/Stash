@@ -163,7 +163,7 @@
 }
 
 @utility uploader-preview-list {
-  @apply fixed bottom-10 right-10 z-50 flex size-full h-fit max-w-[480px] flex-col gap-3 rounded-[20px] bg-surface-a20 p-7;
+  @apply fixed bottom-10 right-10 z-50 lg:flex size-full h-fit max-w-[480px] flex-col gap-3 rounded-[20px] bg-surface-a20 p-7 hidden;
 }
 
 @utility uploader-preview-item {

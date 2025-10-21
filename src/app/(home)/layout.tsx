@@ -13,11 +13,12 @@ const HomeLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex h-screen bg-surface-a10 text-dark-a0">
       <SideBar {...currentUser} />
-      <div className="w-full">
+      <div className="w-full flex flex-col">
         <Header {...currentUser} />
         <MobileNavigation {...currentUser} />
-      <main className="p-2 flex">
-          <div className="w-full max-w-7xl">{children}</div>
+
+        <main className="p-2 flex-1 overflow-auto">
+          <div className="w-full max-w-7xl mx-auto">{children}</div>
         </main>
       </div>
     </div>
