@@ -65,7 +65,8 @@ const getQueries = (
   currentUser: any,
   types: string[],
   searchQuery: string,
-  sort: string
+  sort: string,
+  limit: number
 ) => {
   const queries = [
     Query.or([
@@ -74,7 +75,7 @@ const getQueries = (
     ]),
   ];
 
-  if (types) queries.push(Query.equal("type", types));
+  if (types && types.length > 0) queries.push(Query.equal("type", types));
   if (searchQuery) queries.push(Query.contains("name", [searchQuery]));
   if (sort) {
     const [sortBy, OrderBy] = sort.split("-");
@@ -82,9 +83,9 @@ const getQueries = (
       OrderBy === "asc" ? Query.orderAsc(sortBy) : Query.orderDesc(sortBy)
     );
   }
-  // if (limit !== 0) {
-  //   queries.push(Query.limit(limit));
-  // }
+
+  if(limit !== 0)
+  queries.push(Query.limit(limit));
 
   return queries;
 };
@@ -93,10 +94,12 @@ export const fetchFiles = async ({
   types,
   searchQuery,
   sort = "$createdAt-desc",
+  limit = 0,
 }: {
   types: string[];
   searchQuery: string;
   sort: string;
+  limit: number;
 }) => {
   const { database } = await createAdminClient();
 
@@ -105,7 +108,7 @@ export const fetchFiles = async ({
 
     if (!currentUser) throw new Error("User not found");
 
-    const queries = getQueries(currentUser, types, searchQuery, sort);
+    const queries = getQueries(currentUser, types, searchQuery, sort, limit);
 
     const files = await database.listRows(
       appwriteConfig.databaseId,

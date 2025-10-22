@@ -139,34 +139,34 @@ export const convertFileSize = (sizeInBytes: number, digits?: number) => {
 };
 
 export const formatDateTime = (isoString: string | null | undefined) => {
-  if (!isoString) return '—';
+  if (!isoString) return "—";
 
   const date = new Date(isoString);
 
   // Get hours and adjust for 12-hour format
   let hours = date.getHours();
   const minutes = date.getMinutes();
-  const period = hours >= 12 ? 'pm' : 'am';
+  const period = hours >= 12 ? "pm" : "am";
 
   // Convert hours to 12-hour format
   hours = hours % 12 || 12;
 
   // Format the time and date parts
-  const time = `${hours}:${minutes.toString().padStart(2, '0')}${period}`;
+  const time = `${hours}:${minutes.toString().padStart(2, "0")}${period}`;
   const day = date.getDate();
   const monthNames = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
   const month = monthNames[date.getMonth()];
 
@@ -174,7 +174,7 @@ export const formatDateTime = (isoString: string | null | undefined) => {
 };
 
 export const isToastType = (v: string): v is ToastMsgType =>
-    v === "rename" || v === "delete" || v === "share";
+  v === "rename" || v === "delete" || v === "share";
 
 // DASHBOARD UTILS
 export const getUsageSummary = (totalSpace: any) => {
@@ -211,4 +211,14 @@ export const getUsageSummary = (totalSpace: any) => {
       url: "/others",
     },
   ];
+};
+
+export const calculatePercentage = (sizeInBytes: number) => {
+  const totalSizeInBytes = 2 * 1024 * 1024 * 1024; // 2GB in bytes
+  const percentage = (sizeInBytes / totalSizeInBytes) * 100;
+  return Number(percentage.toFixed(2));
+};
+
+export const calculateAngle = (used: number) => {
+  return (used / 100) * 180;
 };
