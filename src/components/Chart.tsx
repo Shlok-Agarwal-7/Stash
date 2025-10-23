@@ -11,10 +11,10 @@ const chartConfig = {
     label: "Storage Used",
     color: "#2fabe4",
   },
-  size :{
-    label : "Empty",
-    color : "#282828"
-  }
+  size: {
+    label: "Empty",
+    color: "#282828",
+  },
 } satisfies ChartConfig;
 
 export default function ChartRadialStacked({ used = 0 }: { used: number }) {
@@ -27,12 +27,9 @@ export default function ChartRadialStacked({ used = 0 }: { used: number }) {
   const endAngle = calculateAngle(percent);
 
   return (
-    <Card className="">
+    <Card className="bg-surface-a20 border-0 border-none">
       <CardContent className="">
-        <ChartContainer
-          config={chartConfig}
-          className=""
-        >
+        <ChartContainer config={chartConfig} className="">
           <RadialBarChart
             data={chartData}
             endAngle={0}
@@ -66,7 +63,7 @@ export default function ChartRadialStacked({ used = 0 }: { used: number }) {
                         <tspan
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) - 16}
-                          className="fill-foreground text-2xl font-bold"
+                          className="fill-white text-2xl font-bold"
                         >
                           {percent}%
                         </tspan>
