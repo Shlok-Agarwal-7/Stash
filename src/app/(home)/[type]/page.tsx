@@ -9,6 +9,7 @@ const Page = async ({ params, searchParams }: SearchParamProps) => {
     types: type === "media" ? ["video", "audio"] : [type],
     searchQuery: query || "",
     sort: sort || "",
+    limit : 0
   });
 
   return (
