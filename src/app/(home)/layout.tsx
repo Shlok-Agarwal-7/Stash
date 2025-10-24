@@ -18,7 +18,9 @@ const HomeLayout = async ({ children }: { children: React.ReactNode }) => {
         <MobileNavigation {...currentUser} />
 
         <main className="p-2 flex-1 overflow-auto">
-          <div className="w-full max-w-7xl mx-auto">{children}</div>
+          <div className="w-full max-w-7xl mx-auto hide-scrollbar">
+            {children}
+          </div>
         </main>
       </div>
     </div>
