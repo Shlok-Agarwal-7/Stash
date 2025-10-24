@@ -25,6 +25,7 @@ const Search = () => {
           types: [],
           searchQuery: query,
           sort: "",
+          limit : 5
         });
 
         setResults(files.rows);
