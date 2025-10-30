@@ -39,7 +39,7 @@ export const ShareFile = ({
                   className="rounded-full bg-transparent"
                 >
                   <Image
-                    src="/assets/icons/remove.svg"
+                    src="/assets/icons/close-dark.svg"
                     alt="Remove"
                     width={24}
                     height={24}
